@@ -11,14 +11,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ShopManagement {
-	private static CategoriesController categoriesController;
-	private static ProductController productController;
-
-	public ShopManagement(CategoriesController categoriesController, ProductController productController) {
-		ShopManagement.categoriesController = categoriesController;
-		ShopManagement.productController = productController;
-	}
-
 	public void run() {
 		CategoriesController categoriesController = new CategoriesController();
 		ProductController productController = new ProductController();
@@ -52,7 +44,7 @@ public class ShopManagement {
 	}
 
 	public static void main(String[] args) {
-		ShopManagement shopManagement = new ShopManagement(categoriesController, productController);
+		ShopManagement shopManagement = new ShopManagement();
 		shopManagement.run();
 	}
 }
