@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static com.aptech.ishop.utils.Constant.FILE_PRODUCT_NAME;
+import static com.aptech.ishop.utils.Constant.MIN_INTEREST_RATE;
 
 public class ProductServiceImpl implements IProduct {
 
@@ -74,24 +75,108 @@ public class ProductServiceImpl implements IProduct {
                     }
                 }
             } while (true);
-            product.inputData();
+            inputData(productList.get(i));
             productList.add(product);
         }
     }
 
     @Override
-    public void displayData() {
+    public void inputData(Product product) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Tieu de san pham");
+        do {
+            try {
+                product.setTitle(sc.nextLine());
+                if(product.getTitle().length() >= 6 && product.getTitle().length() <= 30) {
+                    break;
+                }else {
+                    System.out.println("Tieu de danh muc phai nhieu hon 6 va be hon 30 ky tu");
+                }
+            } catch (Exception e) {
+                System.out.println("Nhap lai tieu de san pham");
+            }
+        } while (true);
 
+        System.out.println("Nhap gia san pham");
+        do {
+            try {
+                product.setImportPrice(Float.parseFloat(sc.nextLine()));
+                if(product.getImportPrice() > 0) {
+                    break;
+                }else {
+                    System.out.println("Gia nhap phai lon hon 0, vui long nhap lai");
+                }
+            } catch (Exception e) {
+                System.out.println("Gia nhap san pham khong hop le, vui long nhap lai");
+            }
+        } while (true);
+
+        System.out.println("Nhap gia ban san pham");
+        do {
+            try {
+                product.setExportPrice(Float.parseFloat(sc.nextLine()));
+                if(product.getExportPrice() >= (MIN_INTEREST_RATE * product.getImportPrice() + product.getImportPrice()) ) {
+                    break;
+                }else {
+                    System.out.println("Gia ban san pham phai co gia tri lon hon gia ban it nhat la MIN_INTEREST_RATE lan ");
+                }
+            } catch (Exception e) {
+                System.out.println("Gia ban san pham khong hop le, vui long nhap lai");
+            }
+        } while (true);
+        System.out.println("Nhap mo ta san pham");
+        do {
+            try {
+                product.setDecriptions(sc.nextLine());
+                if(product.getDecriptions() != null) {
+                    break;
+                }else {
+                    System.out.println("Mo ta san pham khong duoc de trong, vui long nhap lai");
+                }
+            } catch (Exception e) {
+                System.out.println("Mo ta san pham khong hop le, vui long nhap lai");
+            }
+        } while (true);
+        System.out.println("Nhap trang thai san pham");
+        do {
+            try {
+                product.setProductStatus(sc.nextBoolean());
+                break;
+            } catch (Exception e) {
+                System.out.println("Trang thai san pham khong hop le, vui long nhap lai");
+                sc.next();
+            }
+        } while (true);
+    }
+
+    @Override
+    public void displayData(Product product) {
+        String trangThai;
+        if(product.isProductStatus()) {
+            trangThai = "Hoat dong";
+        }else {
+            trangThai = "Khong hoat dong";
+        }
+        System.out.printf("Ma san pham: %d - Ten san pham: %s\n", product.getProductID(), product.getProductName());
+        System.out.printf("Tieu de san pham: %s\n", product.getDecriptions());
+        System.out.printf("Gia nhap san pham: %f - Gia ban sam pham: %f\n", product.getImportPrice(), product.getExportPrice());
+        System.out.printf("Loi nhuan san pham: %f\n", product.getProfit());
+        System.out.printf("Mo ta san pham: %s - Trang thai: %s\n", product.getDecriptions(), trangThai);
+    }
+
+    @Override
+    public void calProfit(Product product) {
+        product.setProfit(product.getExportPrice() - product.getImportPrice());
     }
 
     @Override
     public void calProfit(List<Product> productList) {
         for(int i = 0; i < productList.size(); i++) {
-            productList.get(i).calProfit();
+            displayData(productList.get(i));
         }
         System.out.println("Da tinh xong loi nhuan san pham");
         for (Product product : productList) {
-            product.displayData();
+            displayData(product);
         }
     }
 
@@ -120,7 +205,7 @@ public class ProductServiceImpl implements IProduct {
         });
         System.out.println("Danh sach san pham sau khi sap xep");
         for (Product product : productList) {
-            product.displayData();
+            displayData(product);
         }
     }
 
@@ -138,7 +223,7 @@ public class ProductServiceImpl implements IProduct {
         });
         System.out.println("Danh sach san pham sau khi sap xep");
         for (Product product : productList) {
-            product.displayData();
+            displayData(product);
         }
     }
 
@@ -147,7 +232,7 @@ public class ProductServiceImpl implements IProduct {
         String nameFind = sc.nextLine();
         for(int i = 0; i < productList.size(); i++) {
             if(nameFind.equalsIgnoreCase(productList.get(i).getProductName())) {
-                productList.get(i).displayData();
+                displayData(productList.get(i));
             }
         }
     }
@@ -173,7 +258,7 @@ public class ProductServiceImpl implements IProduct {
                         productList.get(i).setProductName(newName);
                     }
                 } while (true);
-                productList.get(i).inputData();
+                inputData(productList.get(i));
             }else {
                 System.out.println("Khong tim thay ma san pham can chinh sua");
             }

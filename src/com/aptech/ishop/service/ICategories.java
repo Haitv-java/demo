@@ -12,4 +12,6 @@ public interface ICategories {
 	void removeCategories(Scanner sc, List<Categories> categoriesList);
 	void searchCategories(Scanner sc, List<Categories> categoriesList);
 	void addCategoriestoProduct(Scanner sc, List<Categories> categoriesList);
+	void inputData(Categories categories);
+	void displayData(Categories categories);
 }

@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ShopManagement {
-	private CategoriesController categoriesController;
-	private ProductController productController;
+	private static CategoriesController categoriesController;
+	private static ProductController productController;
 
 	public ShopManagement(CategoriesController categoriesController, ProductController productController) {
-		this.categoriesController = categoriesController;
-		this.productController = productController;
+		ShopManagement.categoriesController = categoriesController;
+		ShopManagement.productController = productController;
 	}
 
 	public void run() {
@@ -49,7 +49,7 @@ public class ShopManagement {
 	}
 
 	public static void main(String[] args) {
-		ShopManagement shopManagement = new ShopManagement();
+		ShopManagement shopManagement = new ShopManagement(categoriesController, productController);
 		shopManagement.run();
 	}
 }
