@@ -2,17 +2,18 @@ package com.aptech.ishop.controller;
 
 import com.aptech.ishop.entity.Product;
 import com.aptech.ishop.service.IProduct;
+import com.aptech.ishop.service.impl.ProductServiceImpl;
 import com.aptech.ishop.utils.ShowMenu;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class ProductController {
-    private IProduct service;
+    private IProduct service = new ProductServiceImpl();
 
-    public ProductController(IProduct service) {
-        this.service = service;
-    }
+//    public ProductController(IProduct service) {
+//        this.service = service;
+//    }
 
     public void rootTwoCase(Scanner sc, List<Product> productList) {
         int choose2;

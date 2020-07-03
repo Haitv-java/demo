@@ -2,21 +2,21 @@ package com.aptech.ishop.controller;
 
 import com.aptech.ishop.entity.Categories;
 import com.aptech.ishop.service.ICategories;
+import com.aptech.ishop.service.impl.CategoriesServiceImpl;
 import com.aptech.ishop.utils.ShowMenu;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import static java.lang.System.err;
 
 public class CategoriesController {
-    private ICategories service;
-
-    public CategoriesController(ICategories service) {
-        this.service = service;
-    }
+    private final ICategories service = new CategoriesServiceImpl();
 
     public void rootOneCase(List<Categories> categoriesList, Scanner sc) {
+        Map<Integer, List<Categories>> categoriesMap = new HashMap<>();
         int choose1;
         do {
             ShowMenu.showMenuQL();
@@ -29,7 +29,7 @@ public class CategoriesController {
                         choose1a = Integer.parseInt(sc.nextLine());
                         switch (choose1a) {
                             case 1:
-                                service.treeCategories(categoriesList);
+                                service.treeCategories(categoriesMap);
                                 break;
                             case 2:
                                 service.displayData(categoriesList);
@@ -43,7 +43,7 @@ public class CategoriesController {
                     break;
 
                 case 2:
-                    service.inputData(sc, categoriesList);
+                    service.inputData(sc, categoriesMap);
                     break;
                 case 3:
                     service.removeCategories(sc, categoriesList);

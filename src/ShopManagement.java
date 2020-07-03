@@ -20,10 +20,13 @@ public class ShopManagement {
 	}
 
 	public void run() {
-		List<Categories> categoriesList = new ArrayList<>();
-		List<Product> productList = new ArrayList<>();
-		ProductServiceImpl.readObjectProductList(productList);
-		CategoriesServiceImpl.readObjectFileCategories(categoriesList);
+		CategoriesController categoriesController = new CategoriesController();
+		ProductController productController = new ProductController();
+		List<Product> productList = ProductServiceImpl.readObjectProductList();
+		List<Categories> categoriesList = CategoriesServiceImpl.readObjectFileCategories();
+
+		System.out.println(productList);
+		System.out.println(categoriesList);
 
 		Scanner sc = new Scanner(System.in);
 		boolean active = true;

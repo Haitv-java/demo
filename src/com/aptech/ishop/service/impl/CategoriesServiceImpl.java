@@ -12,15 +12,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+import static com.aptech.ishop.utils.Constant.COUNT;
 import static com.aptech.ishop.utils.Constant.FILE_CATALOG_NAME;
 import static java.lang.System.*;
 
 public class CategoriesServiceImpl implements ICategories {
 
     @Override
-    public void inputData(Scanner sc, List<Categories> categoriesList) {
+    public void inputData(Scanner sc, Map<Integer, List<Categories>> categoriesMap) {
+        List<Categories> initCategories = new ArrayList<>();
         out.println("Nhap so danh muc san pham muon them");
         int n = 0;
         do {
@@ -52,8 +55,10 @@ public class CategoriesServiceImpl implements ICategories {
                 }
             } while (true);
             inputData(categories);
-            categoriesList.add(categories);
+            initCategories.add(categories);
         }
+        COUNT++;
+        categoriesMap.put(COUNT, initCategories);
     }
 
     @Override
@@ -117,25 +122,28 @@ public class CategoriesServiceImpl implements ICategories {
 
     @Override
     public void displayData(List<Categories> categoriesList) {
-        for(int i = 0; i < categoriesList.size(); i++) {
-            displayData(categoriesList.get(i));
+        for (Categories categories : categoriesList) {
+            displayData(categories);
         }
     }
 
-    public void treeCategories(List<Categories> categoriesList) {
-        int stt0 = 0, stt1 = 0, stt2 = 0;
-        for(int i = 0; i < categoriesList.size(); i++) {
-            if(categoriesList.get(i).getParentID() == 0) {
-                stt0++;
-                out.printf("%d.%s\n", stt0, categoriesList.get(i).getCatalogName());
-                for(int j = 0; j < categoriesList.size(); j++) {
-                    if(categoriesList.get(j).getParentID() == 1) {
-                        stt1++;
-                        out.printf("\t%d.%d.%s\n", stt0, stt1, categoriesList.get(j).getCatalogName());
-                        for(int k = 0; k < categoriesList.size(); k++) {
-                            if(categoriesList.get(k).getParentID() == 2) {
-                                stt2++;
-                                out.printf("\t\t%d.%d.%d.%s\n", stt0, stt1, stt2, categoriesList.get(k).getCatalogName());
+    public void treeCategories(Map<Integer, List<Categories>> categoriesMap) {
+        for (int z = 1; z <= categoriesMap.size(); z++) {
+            List<Categories> categoriesList = categoriesMap.get(z);
+            int stt0 = 0, stt1 = 0, stt2 = 0;
+            for(int i = 0; i < categoriesList.size(); i++) {
+                if (categoriesList.get(i).getParentID() == 0) {
+                    stt0++;
+                    out.printf("%d.%s\n", stt0, categoriesList.get(i).getCatalogName());
+                    for(int j = 0; j < categoriesList.size(); j++) {
+                        if(categoriesList.get(j).getParentID() == 1) {
+                            stt1++;
+                            out.printf("\t%d.%d.%s\n", stt0, stt1, categoriesList.get(j).getCatalogName());
+                            for (Categories categories : categoriesList) {
+                                if (categories.getParentID() == 2) {
+                                    stt2++;
+                                    out.printf("\t\t%d.%d.%d.%s\n", stt0, stt1, stt2, categories.getCatalogName());
+                                }
                             }
                         }
                     }
@@ -237,16 +245,16 @@ public class CategoriesServiceImpl implements ICategories {
         }
     }
 
-    public static void readObjectFileCategories(List<Categories> categoriesList) {
+    public static List<Categories> readObjectFileCategories() {
         File file = new File(FILE_CATALOG_NAME);
         FileInputStream fis = null;
         ObjectInputStream ois = null;
+        List<Categories> categories = new ArrayList<>();
         if (file.exists()) {
             try {
                 fis = new FileInputStream(file);
                 ois = new ObjectInputStream(fis);
-                categoriesList = (ArrayList<Categories>) ois.readObject();
-
+                categories = (List<Categories>) ois.readObject();
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -275,5 +283,6 @@ public class CategoriesServiceImpl implements ICategories {
                 }
             }
         }
+        return categories;
     }
 }

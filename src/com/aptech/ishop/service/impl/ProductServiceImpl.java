@@ -297,15 +297,16 @@ public class ProductServiceImpl implements IProduct {
         }
     }
 
-    public static void readObjectProductList(List<Product> productList) {
+    public static List<Product> readObjectProductList() {
         File file = new File(FILE_PRODUCT_NAME);
         FileInputStream fis = null;
         ObjectInputStream ois = null;
+        List<Product> productList = new ArrayList<>();
         if(file.exists()) {
             try {
                 fis = new FileInputStream(file);
                 ois = new ObjectInputStream(fis);
-                productList = (ArrayList<Product>) ois.readObject();
+                productList = (List<Product>) ois.readObject();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -331,5 +332,6 @@ public class ProductServiceImpl implements IProduct {
                 }
             }
         }
+        return productList;
     }
 }
