@@ -3,13 +3,7 @@ package com.aptech.ishop.service.impl;
 import com.aptech.ishop.entity.Categories;
 import com.aptech.ishop.service.ICategories;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,19 +11,20 @@ import java.util.Scanner;
 
 import static com.aptech.ishop.utils.Constant.COUNT;
 import static com.aptech.ishop.utils.Constant.FILE_CATALOG_NAME;
-import static java.lang.System.*;
+import static java.lang.System.err;
+import static java.lang.System.out;
 
 public class CategoriesServiceImpl implements ICategories {
 
     @Override
-    public void inputData(Scanner sc, Map<Integer, List<Categories>> categoriesMap) {
+    public void insertData(Scanner sc, Map<Integer, List<Categories>> categoriesMap) {
         List<Categories> initCategories = new ArrayList<>();
         out.println("Nhap so danh muc san pham muon them");
-        int n = 0;
+        int categoryId = 0;
         do {
             try {
-                n = Integer.parseInt(sc.nextLine());
-                if(n > 0) {
+                categoryId = Integer.parseInt(sc.nextLine());
+                if(categoryId > 0) {
                     break;
                 }else {
                     err.println("So danh muc muon them phai lon hon khong, vui long nhap lai");
@@ -38,7 +33,8 @@ public class CategoriesServiceImpl implements ICategories {
                 err.println("Nhap lai mot so nguyen");
             }
         } while (true);
-        for(int i = 0 ; i < n; i++) {
+
+        for(int i = 0 ; i < categoryId; i++) {
             Categories categories = new Categories();
             out.println("Nhap ma danh muc");
             do {
@@ -54,7 +50,7 @@ public class CategoriesServiceImpl implements ICategories {
                     out.println("Ma danh muc khong hop le, vui long nhap lai");
                 }
             } while (true);
-            inputData(categories);
+            insertData(categories);
             initCategories.add(categories);
         }
         COUNT++;
@@ -62,7 +58,7 @@ public class CategoriesServiceImpl implements ICategories {
     }
 
     @Override
-    public void inputData(Categories categories) {
+    public void insertData(Categories categories) {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Nhap ten danh muc");
@@ -91,7 +87,7 @@ public class CategoriesServiceImpl implements ICategories {
             } catch (Exception e) {
                 System.out.println("Nhap lai mo ta danh muc");
             }
-        } while (true);
+        } while(true);
 
         System.out.println("Nhap trang thai danh muc");
         do {

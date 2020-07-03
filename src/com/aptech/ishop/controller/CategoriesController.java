@@ -43,7 +43,7 @@ public class CategoriesController {
                     break;
 
                 case 2:
-                    service.inputData(sc, categoriesMap);
+                    service.insertData(sc, categoriesMap);
                     break;
                 case 3:
                     service.removeCategories(sc, categoriesList);

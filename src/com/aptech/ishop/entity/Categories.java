@@ -1,10 +1,5 @@
 package com.aptech.ishop.entity;
 
-import java.io.Serializable;
-import java.util.Scanner;
-
-import com.aptech.ishop.service.ICategories;
-
 public class Categories {
 	private int catalogID;
 	private String catalogName;

@@ -9,11 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProductController {
-    private IProduct service = new ProductServiceImpl();
-
-//    public ProductController(IProduct service) {
-//        this.service = service;
-//    }
+    private final IProduct service = new ProductServiceImpl();
 
     public void rootTwoCase(Scanner sc, List<Product> productList) {
         int choose2;

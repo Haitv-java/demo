@@ -1,12 +1,5 @@
 package com.aptech.ishop.entity;
 
-import java.io.Serializable;
-import java.util.Scanner;
-
-import com.aptech.ishop.service.IProduct;
-
-import static com.aptech.ishop.utils.Constant.MIN_INTEREST_RATE;
-
 public class Product {
 	private String productID;
 	private String productName;
