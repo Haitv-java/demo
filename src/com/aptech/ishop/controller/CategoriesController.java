@@ -1,7 +1,7 @@
 package com.aptech.ishop.controller;
 
 import com.aptech.ishop.entity.Categories;
-import com.aptech.ishop.service.ICategories;
+import com.aptech.ishop.service.CategoryService;
 import com.aptech.ishop.service.impl.CategoriesServiceImpl;
 import com.aptech.ishop.utils.ShowMenu;
 
@@ -13,7 +13,7 @@ import java.util.Scanner;
 import static java.lang.System.err;
 
 public class CategoriesController {
-    private final ICategories service = new CategoriesServiceImpl();
+    private final CategoryService service = new CategoriesServiceImpl();
 
     public void rootOneCase(List<Categories> categoriesList, Scanner sc) {
         Map<Integer, List<Categories>> categoriesMap = new HashMap<>();

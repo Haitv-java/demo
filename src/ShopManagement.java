@@ -3,26 +3,17 @@ import com.aptech.ishop.controller.ProductController;
 import com.aptech.ishop.entity.Categories;
 import com.aptech.ishop.entity.Product;
 import com.aptech.ishop.service.impl.CategoriesServiceImpl;
-import com.aptech.ishop.service.impl.ProductServiceImpl;
+import com.aptech.ishop.service.impl.ProductServiceServiceImpl;
 import com.aptech.ishop.utils.ShowMenu;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ShopManagement {
-	private static CategoriesController categoriesController;
-	private static ProductController productController;
-
-	public ShopManagement(CategoriesController categoriesController, ProductController productController) {
-		ShopManagement.categoriesController = categoriesController;
-		ShopManagement.productController = productController;
-	}
-
 	public void run() {
 		CategoriesController categoriesController = new CategoriesController();
 		ProductController productController = new ProductController();
-		List<Product> productList = ProductServiceImpl.readObjectProductList();
+		List<Product> productList = ProductServiceServiceImpl.readObjectProductList();
 		List<Categories> categoriesList = CategoriesServiceImpl.readObjectFileCategories();
 
 		System.out.println(productList);
@@ -42,7 +33,7 @@ public class ShopManagement {
 					break;
 				case 3:
 					CategoriesServiceImpl.writeObjectFileCategories(categoriesList);
-					ProductServiceImpl.writeObjectFileProduct(productList);
+					ProductServiceServiceImpl.writeObjectFileProduct(productList);
 					active = false;
 					break;
 				default:
@@ -52,7 +43,7 @@ public class ShopManagement {
 	}
 
 	public static void main(String[] args) {
-		ShopManagement shopManagement = new ShopManagement(categoriesController, productController);
+		ShopManagement shopManagement = new ShopManagement();
 		shopManagement.run();
 	}
 }
