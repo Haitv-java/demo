@@ -15,7 +15,7 @@ import static java.lang.System.err;
 public class CategoriesController {
     private final CategoryService service = new CategoriesServiceImpl();
 
-    public void rootOneCase(List<Categories> categoriesList, Scanner sc) {
+    public void categoryCase(List<Categories> categoriesList, Scanner sc) {
         Map<Integer, List<Categories>> categoriesMap = new HashMap<>();
         int choose1;
         do {

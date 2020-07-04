@@ -16,9 +16,6 @@ public class ShopManagement {
 		List<Product> productList = ProductServiceServiceImpl.readObjectProductList();
 		List<Categories> categoriesList = CategoriesServiceImpl.readObjectFileCategories();
 
-		System.out.println(productList);
-		System.out.println(categoriesList);
-
 		Scanner sc = new Scanner(System.in);
 		boolean active = true;
 		do {
@@ -26,10 +23,10 @@ public class ShopManagement {
 			int choose = Integer.parseInt(sc.nextLine());
 			switch (choose) {
 				case 1:
-					categoriesController.rootOneCase(categoriesList, sc);
+					categoriesController.categoryCase(categoriesList, sc);
 					break;
 				case 2:
-					productController.rootTwoCase(sc, productList);
+					productController.productCase(sc, productList);
 					break;
 				case 3:
 					CategoriesServiceImpl.writeObjectFileCategories(categoriesList);

@@ -24,6 +24,26 @@ public class Product implements IProduct {
 		this.productID = productID;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setImportPrice(float importPrice) {
+		this.importPrice = importPrice;
+	}
+
+	public void setExportPrice(float exportPrice) {
+		this.exportPrice = exportPrice;
+	}
+
+	public void setProfit(float profit) {
+		this.profit = profit;
+	}
+
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
+	}
+
 	public String getProductName() {
 		return productName;
 	}
@@ -56,19 +76,23 @@ public class Product implements IProduct {
 		this.productStatus = productStatus;
 	}
 
+	public boolean getProductStatus() {
+		return this.productStatus;
+	}
+
 	public String getTitle() {
 		return title;
 	}
 
 	@Override
-	public void inputData(Product product, Scanner sc) {
-		this.productID = formInputText(sc, PRODUCT_ID, product);
-		this.productName = formInputText(sc, PRODUCT_NAME, product);
-		this.title = formInputText(sc, PRODUCT_TITLE, product);
-		this.descriptions = formInputText(sc, PRODUCT_DESCRIPTION, product);
-		this.importPrice = formInputNumber(sc, PRODUCT_PRICE_IMPORT, product);
-		this.exportPrice = formInputNumber(sc, PRODUCT_PRICE_EXPORT, product);
-		this.productStatus = formInputBoolean(sc, PRODUCT_STATUS);
+	public void inputData(Product product, Scanner sc, Product existProduct) {
+		product.setProductID(formInputText(sc, PRODUCT_ID, existProduct));
+		product.setProductName(formInputText(sc, PRODUCT_NAME, existProduct));
+		product.setTitle(formInputText(sc, PRODUCT_TITLE, product));
+		product.setDescriptions(formInputText(sc, PRODUCT_DESCRIPTION, product));
+		product.setImportPrice(formInputNumber(sc, PRODUCT_PRICE_IMPORT, product));
+		product.setExportPrice(formInputNumber(sc, PRODUCT_PRICE_EXPORT, product));
+		formInputBoolean(sc, PRODUCT_STATUS, product);
 	}
 
 	public String formInputText(Scanner scanner, String field, Product product) {
@@ -90,9 +114,7 @@ public class Product implements IProduct {
 		float value;
 		do {
 			try {
-				scanner.nextLine();
-				value = scanner.nextFloat();
-				scanner.nextLine();
+				value = Float.parseFloat(scanner.nextLine());
 				if (ProductValidate.inputValid(field, String.valueOf(value), product)) break;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -102,19 +124,19 @@ public class Product implements IProduct {
 		return value;
 	}
 
-	public boolean formInputBoolean(Scanner scanner, String field) {
+	public void formInputBoolean(Scanner scanner, String field, Product product) {
 		System.out.println(field);
-		boolean value;
 		do {
-			try {
-				value = scanner.nextBoolean();
-				break;
-			} catch (Exception e) {
+			String status = scanner.nextLine();
+			if (status.equalsIgnoreCase("true") || status.equalsIgnoreCase("false")) {
+				if (status.equalsIgnoreCase("true")) {
+					product.setProductStatus(true);
+				}
+				return;
+			} else {
 				System.out.println("Trang thai san pham khong hop le, vui long nhap lai");
-				scanner.next();
 			}
 		} while (true);
-		return value;
 	}
 
 	@Override
@@ -126,7 +148,7 @@ public class Product implements IProduct {
 	public void displayData(Product product) {
 		if (product == null) return;
 		String status;
-		if(this.productStatus) {
+		if(product.getProductStatus()) {
 			status = "Hoat dong";
 		}else {
 			status = "Khong hoat dong";
