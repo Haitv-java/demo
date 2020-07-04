@@ -1,5 +1,6 @@
 package com.aptech.ishop.service.impl;
 
+import com.aptech.ishop.entity.IProduct;
 import com.aptech.ishop.entity.Product;
 import com.aptech.ishop.service.ProductService;
 
@@ -19,6 +20,7 @@ import java.util.Scanner;
 import static com.aptech.ishop.utils.Constant.*;
 
 public class ProductServiceServiceImpl implements ProductService {
+    private final IProduct iProduct = new Product();
 
     @Override
     public void inputData(Scanner sc, List<Product> productList) {
@@ -27,10 +29,10 @@ public class ProductServiceServiceImpl implements ProductService {
         for(int i = 0; i < addProductSize ; i++) {
             Product product = new Product();
             if (productList.isEmpty()) {
-                product.inputData(product, sc);
+                iProduct.inputData(product, sc);
             }
             for (Product value : productList) {
-                product.inputData(value, sc);
+                iProduct.inputData(value, sc);
             }
             productList.add(product);
         }
@@ -40,7 +42,7 @@ public class ProductServiceServiceImpl implements ProductService {
     public void calProfit(List<Product> productList) {
         for (Product product : productList) {
             System.out.println("Da tinh xong loi nhuan san pham");
-            product.displayData(product);
+            iProduct.displayData(product);
         }
     }
 
@@ -60,7 +62,7 @@ public class ProductServiceServiceImpl implements ProductService {
         productList.sort(Comparator.comparing(Product::getExportPrice));
         System.out.println("Danh sach san pham sau khi sap xep");
         for (Product product : productList) {
-            product.displayData(product);
+            iProduct.displayData(product);
         }
     }
 
@@ -68,7 +70,7 @@ public class ProductServiceServiceImpl implements ProductService {
         productList.sort(Comparator.comparing(Product::getProfit));
         System.out.println("Danh sach san pham sau khi sap xep");
         for (Product product : productList) {
-            product.displayData(product);
+            iProduct.displayData(product);
         }
     }
 
@@ -77,7 +79,7 @@ public class ProductServiceServiceImpl implements ProductService {
         String nameFind = sc.nextLine();
         for (Product product : productList) {
             if (nameFind.equalsIgnoreCase(product.getProductName())) {
-                product.displayData(product);
+                iProduct.displayData(product);
             }
         }
     }

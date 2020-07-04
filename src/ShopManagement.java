@@ -16,9 +16,6 @@ public class ShopManagement {
 		List<Product> productList = ProductServiceServiceImpl.readObjectProductList();
 		List<Categories> categoriesList = CategoriesServiceImpl.readObjectFileCategories();
 
-		System.out.println(productList);
-		System.out.println(categoriesList);
-
 		Scanner sc = new Scanner(System.in);
 		boolean active = true;
 		do {

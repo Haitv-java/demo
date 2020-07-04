@@ -24,6 +24,26 @@ public class Product implements IProduct {
 		this.productID = productID;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setImportPrice(float importPrice) {
+		this.importPrice = importPrice;
+	}
+
+	public void setExportPrice(float exportPrice) {
+		this.exportPrice = exportPrice;
+	}
+
+	public void setProfit(float profit) {
+		this.profit = profit;
+	}
+
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
+	}
+
 	public String getProductName() {
 		return productName;
 	}
@@ -62,13 +82,13 @@ public class Product implements IProduct {
 
 	@Override
 	public void inputData(Product product, Scanner sc) {
-		this.productID = formInputText(sc, PRODUCT_ID, product);
-		this.productName = formInputText(sc, PRODUCT_NAME, product);
-		this.title = formInputText(sc, PRODUCT_TITLE, product);
-		this.descriptions = formInputText(sc, PRODUCT_DESCRIPTION, product);
-		this.importPrice = formInputNumber(sc, PRODUCT_PRICE_IMPORT, product);
-		this.exportPrice = formInputNumber(sc, PRODUCT_PRICE_EXPORT, product);
-		this.productStatus = formInputBoolean(sc, PRODUCT_STATUS);
+		product.setProductID(formInputText(sc, PRODUCT_ID, product));
+		product.setProductName(formInputText(sc, PRODUCT_NAME, product));
+		product.setTitle(formInputText(sc, PRODUCT_TITLE, product));
+		product.setDescriptions(formInputText(sc, PRODUCT_DESCRIPTION, product));
+		product.setImportPrice(formInputNumber(sc, PRODUCT_PRICE_IMPORT, product));
+		product.setExportPrice(formInputNumber(sc, PRODUCT_PRICE_EXPORT, product));
+		product.setProductStatus(formInputBoolean(sc, PRODUCT_STATUS));
 	}
 
 	public String formInputText(Scanner scanner, String field, Product product) {
@@ -90,9 +110,7 @@ public class Product implements IProduct {
 		float value;
 		do {
 			try {
-				scanner.nextLine();
-				value = scanner.nextFloat();
-				scanner.nextLine();
+				value = Float.parseFloat(scanner.nextLine());
 				if (ProductValidate.inputValid(field, String.valueOf(value), product)) break;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -107,7 +125,7 @@ public class Product implements IProduct {
 		boolean value;
 		do {
 			try {
-				value = scanner.nextBoolean();
+				value = Boolean.parseBoolean(scanner.nextLine());
 				break;
 			} catch (Exception e) {
 				System.out.println("Trang thai san pham khong hop le, vui long nhap lai");
