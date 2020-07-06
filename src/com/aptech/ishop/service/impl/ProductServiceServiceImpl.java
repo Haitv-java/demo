@@ -1,41 +1,29 @@
 package com.aptech.ishop.service.impl;
 
+import com.aptech.ishop.Storage.ProductStorage;
 import com.aptech.ishop.entity.IProduct;
 import com.aptech.ishop.entity.Product;
+import com.aptech.ishop.model.ProductRequest;
 import com.aptech.ishop.service.ProductService;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.aptech.ishop.utils.Constant.*;
-
 public class ProductServiceServiceImpl implements ProductService {
     private final IProduct iProduct = new Product();
+    private final ProductStorage productStorage = new ProductStorage();
 
     @Override
-    public void inputData(Scanner sc, List<Product> productList) {
-        System.out.println("Nhap so san pham can them");
-        int addProductSize = Integer.parseInt(sc.nextLine());
-        for (int i = 0; i < addProductSize ; i++) {
-            Product product = new Product();
-            if (productList.isEmpty()) {
-                iProduct.inputData(product, sc, null);
-            }
-            for (Product existProduct : productList) {
-                iProduct.inputData(product, sc, existProduct);
-            }
-            productList.add(product);
-        }
+    public void save(List<ProductRequest> requests) {
+        List<Product> products = new ArrayList<>();
+        requests.forEach(productRequest -> {
+            System.out.println(iProduct.inputData(productRequest).toString());
+            products.add(iProduct.inputData(productRequest));
+        });
+        productStorage.saveAll(products);
+        System.out.println(productStorage.getAll().get(0).toString());
     }
 
     @Override
@@ -111,67 +99,5 @@ public class ProductServiceServiceImpl implements ProductService {
                 }
             } while (true);
         }
-    }
-
-    public static void writeObjectFileProduct(List<Product> productList) {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
-        File file = new File(FILE_PRODUCT_NAME);
-        try {
-            fos = new FileOutputStream(file);
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(productList);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (oos != null) {
-                try {
-                    oos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public static List<Product> readObjectProductList() {
-        File file = new File(FILE_PRODUCT_NAME);
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
-        List<Product> productList = new ArrayList<>();
-        if(file.exists()) {
-            try {
-                fis = new FileInputStream(file);
-                ois = new ObjectInputStream(fis);
-                productList = (List<Product>) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                if (fis != null) {
-                    try {
-                        fis.close();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-                if (ois != null) {
-                    try {
-                        ois.close();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-        return productList;
     }
 }

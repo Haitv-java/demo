@@ -1,9 +1,9 @@
+import com.aptech.ishop.Storage.ProductStorage;
 import com.aptech.ishop.controller.CategoriesController;
 import com.aptech.ishop.controller.ProductController;
 import com.aptech.ishop.entity.Categories;
 import com.aptech.ishop.entity.Product;
 import com.aptech.ishop.service.impl.CategoriesServiceImpl;
-import com.aptech.ishop.service.impl.ProductServiceServiceImpl;
 import com.aptech.ishop.utils.ShowMenu;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class ShopManagement {
 	public void run() {
 		CategoriesController categoriesController = new CategoriesController();
 		ProductController productController = new ProductController();
-		List<Product> productList = ProductServiceServiceImpl.readObjectProductList();
+		List<Product> productList = ProductStorage.readObjectProductList();
 		List<Categories> categoriesList = CategoriesServiceImpl.readObjectFileCategories();
 
 		Scanner sc = new Scanner(System.in);
@@ -30,7 +30,7 @@ public class ShopManagement {
 					break;
 				case 3:
 					CategoriesServiceImpl.writeObjectFileCategories(categoriesList);
-					ProductServiceServiceImpl.writeObjectFileProduct(productList);
+					ProductStorage.writeObjectFileProduct();
 					active = false;
 					break;
 				default:

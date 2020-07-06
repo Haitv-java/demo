@@ -1,9 +1,9 @@
 package com.aptech.ishop.entity;
 
-import java.util.Scanner;
+import com.aptech.ishop.model.ProductRequest;
 
 public interface IProduct {
 	void displayData(Product product);
 	void calProfit(Product product);
-	void inputData(Product product, Scanner scanner, Product existProduct);
+	Product inputData(ProductRequest request);
 }

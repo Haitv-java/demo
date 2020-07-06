@@ -1,10 +1,6 @@
 package com.aptech.ishop.entity;
 
-import com.aptech.ishop.validate.ProductValidate;
-
-import java.util.Scanner;
-
-import static com.aptech.ishop.utils.Constant.*;
+import com.aptech.ishop.model.ProductRequest;
 
 public class Product implements IProduct {
 	private String productID;
@@ -85,58 +81,17 @@ public class Product implements IProduct {
 	}
 
 	@Override
-	public void inputData(Product product, Scanner sc, Product existProduct) {
-		product.setProductID(formInputText(sc, PRODUCT_ID, existProduct));
-		product.setProductName(formInputText(sc, PRODUCT_NAME, existProduct));
-		product.setTitle(formInputText(sc, PRODUCT_TITLE, product));
-		product.setDescriptions(formInputText(sc, PRODUCT_DESCRIPTION, product));
-		product.setImportPrice(formInputNumber(sc, PRODUCT_PRICE_IMPORT, product));
-		product.setExportPrice(formInputNumber(sc, PRODUCT_PRICE_EXPORT, product));
-		formInputBoolean(sc, PRODUCT_STATUS, product);
-	}
+	public Product inputData(ProductRequest request) {
+		Product product = new Product();
+		product.setProductID(request.getProductID());
+		product.setProductName(request.getProductName());
+		product.setTitle(request.getTitle());
+		product.setDescriptions(request.getDescriptions());
+		product.setImportPrice(request.getImportPrice());
+		product.setExportPrice(request.getExportPrice());
+		product.setProductStatus(request.getProductStatus());
 
-	public String formInputText(Scanner scanner, String field, Product product) {
-		System.out.println(field);
-		String value;
-		do {
-			try {
-				value = scanner.nextLine();
-				if (ProductValidate.inputValid(field, value, product)) break;
-			} catch (Exception e) {
-				System.out.println("Nhap lai" + field);
-			}
-		} while (true);
-		return value;
-	}
-
-	public float formInputNumber(Scanner scanner, String field, Product product) {
-		System.out.println(field);
-		float value;
-		do {
-			try {
-				value = Float.parseFloat(scanner.nextLine());
-				if (ProductValidate.inputValid(field, String.valueOf(value), product)) break;
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Nhap lai " + field);
-			}
-		} while (true);
-		return value;
-	}
-
-	public void formInputBoolean(Scanner scanner, String field, Product product) {
-		System.out.println(field);
-		do {
-			String status = scanner.nextLine();
-			if (status.equalsIgnoreCase("true") || status.equalsIgnoreCase("false")) {
-				if (status.equalsIgnoreCase("true")) {
-					product.setProductStatus(true);
-				}
-				return;
-			} else {
-				System.out.println("Trang thai san pham khong hop le, vui long nhap lai");
-			}
-		} while (true);
+		return product;
 	}
 
 	@Override
@@ -158,5 +113,19 @@ public class Product implements IProduct {
 		System.out.printf("Gia nhap san pham: %f - Gia ban sam pham: %f\n", product.getImportPrice(), product.getExportPrice());
 		System.out.printf("Loi nhuan san pham: %f\n", product.getProfit());
 		System.out.printf("Mo ta san pham: %s - Trang thai: %s\n", product.getDescriptions(), status);
+	}
+
+	@Override
+	public String toString() {
+		return "Product{" +
+				"productID='" + productID + '\'' +
+				", productName='" + productName + '\'' +
+				", title='" + title + '\'' +
+				", importPrice=" + importPrice +
+				", exportPrice=" + exportPrice +
+				", profit=" + profit +
+				", descriptions='" + descriptions + '\'' +
+				", productStatus=" + productStatus +
+				'}';
 	}
 }

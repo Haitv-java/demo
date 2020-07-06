@@ -1,12 +1,13 @@
 package com.aptech.ishop.service;
 
 import com.aptech.ishop.entity.Product;
+import com.aptech.ishop.model.ProductRequest;
 
 import java.util.List;
 import java.util.Scanner;
 
 public interface ProductService {
-	void inputData(Scanner sc, List<Product> productList);
+	void save(List<ProductRequest> request);
 	void calProfit(List<Product> productList);
 	void updateInfoProduct(Scanner sc, List<Product> productList);
 	void findByName(Scanner sc, List<Product> productList);

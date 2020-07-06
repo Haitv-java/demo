@@ -1,15 +1,19 @@
 package com.aptech.ishop.controller;
 
 import com.aptech.ishop.entity.Product;
+import com.aptech.ishop.model.ProductRequest;
 import com.aptech.ishop.service.ProductService;
 import com.aptech.ishop.service.impl.ProductServiceServiceImpl;
+import com.aptech.ishop.utils.ScannerCommon;
 import com.aptech.ishop.utils.ShowMenu;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ProductController {
     private final ProductService service = new ProductServiceServiceImpl();
+    private final ProductRequest requestBody = new ProductRequest();
 
     public void productCase(Scanner sc, List<Product> productList) {
         int choose;
@@ -18,7 +22,9 @@ public class ProductController {
             choose = Integer.parseInt(sc.nextLine());
             switch (choose) {
                 case 1:
-                    service.inputData(sc, productList);
+                    List<ProductRequest> requestBody = initRequestBody();
+                    System.out.println(requestBody.get(0).toString());
+                    service.save(requestBody);
                     break;
                 case 2:
                     service.calProfit(productList);
@@ -81,5 +87,16 @@ public class ProductController {
                     System.err.println("Nhap lai lua chon cua ban (1-3)");
             }
         } while (choose != 3);
+    }
+
+    private List<ProductRequest> initRequestBody() {
+        System.out.println("Nhap so san pham can them");
+        List<ProductRequest> productRequests = new ArrayList<>();
+        int addProductSize = ScannerCommon.integerInput();
+        ScannerCommon.nextLine();
+        for (int i = 0; i < addProductSize; i++) {
+            productRequests.add(requestBody.initRequestBody());
+        }
+        return productRequests;
     }
 }

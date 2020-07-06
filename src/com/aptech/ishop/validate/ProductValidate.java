@@ -1,12 +1,11 @@
 package com.aptech.ishop.validate;
 
-import com.aptech.ishop.entity.Product;
+import com.aptech.ishop.model.ProductRequest;
 
 import static com.aptech.ishop.utils.Constant.*;
-import static com.aptech.ishop.utils.Constant.PRODUCT_NAME;
 
 public class ProductValidate {
-    public static boolean inputValid(String field, String valueInput, Product product) {
+    public static boolean inputValid(String field, String valueInput, ProductRequest product) {
         if (PRODUCT_TITLE.equals(field)) {
             if (valueInput.length() < 6 || valueInput.length() > 30) {
                 System.out.println(field + " phai nhieu hon 6 va be hon 30 ky tu");
@@ -20,8 +19,6 @@ public class ProductValidate {
             }
         }
         if (PRODUCT_PRICE_EXPORT.equals(field)) {
-            System.out.println(valueInput);
-            System.out.println(product.toString());
             if (Float.parseFloat(valueInput) < (MIN_INTEREST_RATE * product.getImportPrice() + product.getImportPrice())) {
                 System.out.println(field + " phai co gia tri lon hon gia ban it nhat la MIN_INTEREST_RATE lan ");
                 return false;
