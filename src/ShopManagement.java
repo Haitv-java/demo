@@ -6,14 +6,14 @@ import com.aptech.ishop.entity.Product;
 import com.aptech.ishop.service.impl.CategoriesServiceImpl;
 import com.aptech.ishop.utils.ShowMenu;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 public class ShopManagement {
-	public void run() {
+	public void run() throws IOException {
 		CategoriesController categoriesController = new CategoriesController();
 		ProductController productController = new ProductController();
-		List<Product> productList = ProductStorage.readObjectProductList();
 		List<Categories> categoriesList = CategoriesServiceImpl.readObjectFileCategories();
 
 		Scanner sc = new Scanner(System.in);
@@ -26,11 +26,10 @@ public class ShopManagement {
 					categoriesController.categoryCase(categoriesList, sc);
 					break;
 				case 2:
-					productController.productCase(sc, productList);
+					productController.productCase(sc, null);
 					break;
 				case 3:
-					CategoriesServiceImpl.writeObjectFileCategories(categoriesList);
-					ProductStorage.writeObjectFileProduct();
+//					CategoriesServiceImpl.writeObjectFileCategories(categoriesList);
 					active = false;
 					break;
 				default:
@@ -41,6 +40,10 @@ public class ShopManagement {
 
 	public static void main(String[] args) {
 		ShopManagement shopManagement = new ShopManagement();
-		shopManagement.run();
+		try {
+			shopManagement.run();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

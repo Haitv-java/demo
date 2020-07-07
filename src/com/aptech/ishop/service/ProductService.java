@@ -3,6 +3,7 @@ package com.aptech.ishop.service;
 import com.aptech.ishop.entity.Product;
 import com.aptech.ishop.model.ProductRequest;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 

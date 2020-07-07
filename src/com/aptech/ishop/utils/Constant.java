@@ -2,7 +2,7 @@ package com.aptech.ishop.utils;
 
 public class Constant {
     public static final String FILE_CATALOG_NAME = "Categories.txt";
-    public static final String FILE_PRODUCT_NAME = "Products.txt";
+    public static final String FILE_PRODUCT_NAME = "D:\\my-project\\demo\\Products.txt";
     public static float MIN_INTEREST_RATE = (float) 0.2;
     public static int COUNT = 0;
     public static String PRODUCT_DESCRIPTION = "Nhap mo ta san pham";

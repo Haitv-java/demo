@@ -9,16 +9,18 @@ import java.util.List;
 import static com.aptech.ishop.utils.Constant.FILE_PRODUCT_NAME;
 
 public class ProductStorage {
-    public static List<Product> productRepository = readObjectProductList();
+    private static List<Product> productRepository = (List<Product>) readObjectFromFile();
 
     public void saveAll(List<Product> products) {
         System.out.println(productRepository);
         productRepository.addAll(products);
+        products.forEach(this::writeObjectToFile);
         System.out.println("Save product successfully!");
     }
 
     public void save(Product product) {
         productRepository.add(product);
+        writeObjectToFile(product);
         System.out.println("Save product successfully!");
     }
 
@@ -26,63 +28,31 @@ public class ProductStorage {
         return productRepository;
     }
 
-    public static void writeObjectFileProduct() {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
-        File file = new File(FILE_PRODUCT_NAME);
+    public void writeObjectToFile(Object serObj) {
         try {
-            fos = new FileOutputStream(file);
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(productRepository);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (oos != null) {
-                try {
-                    oos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            FileOutputStream fileOut = new FileOutputStream(FILE_PRODUCT_NAME);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(serObj);
+            objectOut.close();
+            System.out.println("The Object  was succesfully written to a file");
+        } catch (Exception ex) {
+            System.out.println("Writer file failed!");
         }
     }
 
-    public static List<Product> readObjectProductList() {
-        File file = new File(FILE_PRODUCT_NAME);
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
-        if(file.exists()) {
-            try {
-                fis = new FileInputStream(file);
-                ois = new ObjectInputStream(fis);
-                productRepository = (List<Product>) ois.readObject();
-                if (productRepository == null) return new ArrayList<>();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                if (fis != null) {
-                    try {
-                        fis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (ois != null) {
-                    try {
-                        ois.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+    public static Object readObjectFromFile() {
+        try {
+            FileInputStream fileIn = new FileInputStream(FILE_PRODUCT_NAME);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+            Object obj = objectIn.readObject();
+
+            System.out.println("The Object has been read from the file");
+            objectIn.close();
+            return obj;
+        } catch (Exception ex) {
+            System.out.println("Read file failed!");
+            return new ArrayList<>();
         }
-        return productRepository;
     }
 }

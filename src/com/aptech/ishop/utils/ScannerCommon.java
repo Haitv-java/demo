@@ -11,7 +11,6 @@ public class ScannerCommon {
             } catch (Exception e) {
                 System.out.println("Input invalid! try again.");
             }
-            nextLine();
         } while (true);
     }
 

@@ -70,11 +70,11 @@ public class ProductRequest {
 
     public ProductRequest initRequestBody() {
         ProductRequest productRequest = new ProductRequest();
-        productRequest.setProductID(formInputText(PRODUCT_ID, productRequest));
-        productRequest.setProductName(formInputText(PRODUCT_NAME, productRequest));
-        productRequest.setTitle(formInputText(PRODUCT_TITLE, productRequest));
-        productRequest.setDescriptions(formInputText(PRODUCT_DESCRIPTION, productRequest));
-        productRequest.setImportPrice(formInputNumber(PRODUCT_PRICE_IMPORT, productRequest));
+//        productRequest.setProductID(formInputText(PRODUCT_ID, productRequest));
+//        productRequest.setProductName(formInputText(PRODUCT_NAME, productRequest));
+//        productRequest.setTitle(formInputText(PRODUCT_TITLE, productRequest));
+//        productRequest.setDescriptions(formInputText(PRODUCT_DESCRIPTION, productRequest));
+//        productRequest.setImportPrice(formInputNumber(PRODUCT_PRICE_IMPORT, productRequest));
         productRequest.setExportPrice(formInputNumber(PRODUCT_PRICE_EXPORT, productRequest));
         formInputBoolean(PRODUCT_STATUS, productRequest);
 
@@ -95,14 +95,16 @@ public class ProductRequest {
         System.out.println(field);
         do {
             float value = ScannerCommon.floatInput();
-            if(ProductValidate.inputValid(field, String.valueOf(value), request)) return value;
+            if(ProductValidate.inputValid(field, String.valueOf(value), request)) {
+                ScannerCommon.nextLine();
+                return value;
+            }
         } while (true);
     }
 
     public void formInputBoolean(String field, ProductRequest request) {
         System.out.println(field);
         do {
-            nextLine();
             String status = ScannerCommon.stringInput();
             if ("true".equalsIgnoreCase(status) || "false".equalsIgnoreCase(status)) {
                 if ("true".equalsIgnoreCase(status)) {

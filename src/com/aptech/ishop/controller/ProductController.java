@@ -7,6 +7,7 @@ import com.aptech.ishop.service.impl.ProductServiceServiceImpl;
 import com.aptech.ishop.utils.ScannerCommon;
 import com.aptech.ishop.utils.ShowMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,15 +23,13 @@ public class ProductController {
             choose = Integer.parseInt(sc.nextLine());
             switch (choose) {
                 case 1:
-                    List<ProductRequest> requestBody = initRequestBody();
-                    System.out.println(requestBody.get(0).toString());
-                    service.save(requestBody);
+                    service.save(initRequestBody());
                     break;
                 case 2:
                     service.calProfit(productList);
                     break;
                 case 3:
-                    displayProductInfo(productList, sc);
+                    displayProductInfo();
                     break;
                 case 4:
                     productSorted(productList, sc);
@@ -49,23 +48,21 @@ public class ProductController {
         } while (choose != 7);
     }
 
-    private void displayProductInfo(List<Product> productList, Scanner scanner) {
+    private void displayProductInfo() {
         int choose;
         do {
             ShowMenu.showMenuTTSP();
-            choose = Integer.parseInt(scanner.nextLine());
+            choose = ScannerCommon.integerInput();
             switch (choose) {
                 case 1:
                     break;
+
                 case 2:
-                    service.findByName(scanner, productList);
-                    break;
-                case 3:
+//                    service.findByName(scanner, productList);
                     break;
                 default:
                     System.err.println("Nhap lai lua chon cua ban (1-3)");
             }
-            break;
         } while (choose != 3);
     }
 

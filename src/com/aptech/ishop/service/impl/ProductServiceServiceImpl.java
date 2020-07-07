@@ -23,7 +23,6 @@ public class ProductServiceServiceImpl implements ProductService {
             products.add(iProduct.inputData(productRequest));
         });
         productStorage.saveAll(products);
-        System.out.println(productStorage.getAll().get(0).toString());
     }
 
     @Override
@@ -41,7 +40,6 @@ public class ProductServiceServiceImpl implements ProductService {
             if (statusByID.equalsIgnoreCase(product.getProductID())) {
                 product.setProductStatus(!product.isProductStatus());
             }
-            break;
         }
         System.out.println("Trang thai san pham da duoc cap nhat");
     }

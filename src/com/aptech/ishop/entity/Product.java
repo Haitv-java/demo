@@ -2,7 +2,9 @@ package com.aptech.ishop.entity;
 
 import com.aptech.ishop.model.ProductRequest;
 
-public class Product implements IProduct {
+import java.io.Serializable;
+
+public class Product implements IProduct, Serializable {
 	private String productID;
 	private String productName;
 	private String title;
