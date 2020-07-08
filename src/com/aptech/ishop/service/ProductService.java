@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface ProductService {
-	void save(List<ProductRequest> request);
-	void calProfit(List<Product> productList);
-	void updateInfoProduct(Scanner sc, List<Product> productList);
-	void findByName(Scanner sc, List<Product> productList);
-	void sortProfit(List<Product> productList);
-	void sortExportPrice(List<Product> productList);
-	void updateProductStatus(Scanner sc, List<Product> productList);
+	void createProduct(List<ProductRequest> request);
+	void calProfit();
+	void updateInfoProduct(ProductRequest request);
+	void findByName(String productName);
+	void sortProfit();
+	void sortExportPrice();
+	void updateProductStatus(String productId);
+	void getAllProducts();
 }

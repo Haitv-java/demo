@@ -1,44 +1,43 @@
 package com.aptech.ishop.controller;
 
-import com.aptech.ishop.entity.Product;
 import com.aptech.ishop.model.ProductRequest;
 import com.aptech.ishop.service.ProductService;
 import com.aptech.ishop.service.impl.ProductServiceServiceImpl;
 import com.aptech.ishop.utils.ScannerCommon;
 import com.aptech.ishop.utils.ShowMenu;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ProductController {
     private final ProductService service = new ProductServiceServiceImpl();
     private final ProductRequest requestBody = new ProductRequest();
 
-    public void productCase(Scanner sc, List<Product> productList) {
+    public void productCase() {
         int choose;
         do {
             ShowMenu.showMenuQLSP();
-            choose = Integer.parseInt(sc.nextLine());
+            choose = ScannerCommon.integerInput();
             switch (choose) {
                 case 1:
-                    service.save(initRequestBody());
+                    service.createProduct(formInputCreateProduct());
                     break;
                 case 2:
-                    service.calProfit(productList);
+                    service.calProfit();
                     break;
                 case 3:
                     displayProductInfo();
                     break;
                 case 4:
-                    productSorted(productList, sc);
+                    productSorted();
                     break;
                 case 5:
-                    service.updateInfoProduct(sc, productList);
+                    service.updateInfoProduct(formInputUpdateProduct());
                     break;
                 case 6:
-                    service.updateProductStatus(sc, productList);
+                    System.out.println("Nhap productId muon cap nhat thong tin");
+                    String productId = ScannerCommon.stringInput();
+                    service.updateProductStatus(productId);
                     break;
                 case 7:
                     break;
@@ -55,10 +54,12 @@ public class ProductController {
             choose = ScannerCommon.integerInput();
             switch (choose) {
                 case 1:
+                    service.getAllProducts();
                     break;
-
                 case 2:
-//                    service.findByName(scanner, productList);
+                    System.out.println("Nhap ten san pham ban muon tim");
+                    ScannerCommon.nextLine();
+                    service.findByName(ScannerCommon.stringInput());
                     break;
                 default:
                     System.err.println("Nhap lai lua chon cua ban (1-3)");
@@ -66,17 +67,17 @@ public class ProductController {
         } while (choose != 3);
     }
 
-    private void productSorted(List<Product> productList, Scanner scanner) {
+    private void productSorted() {
         int choose;
         do {
             ShowMenu.showMenuSXSP();
-            choose = Integer.parseInt(scanner.nextLine());
+            choose = ScannerCommon.integerInput();
             switch (choose) {
                 case 1:
-                    service.sortExportPrice(productList);
+                    service.sortExportPrice();
                     break;
                 case 2:
-                    service.sortProfit(productList);
+                    service.sortProfit();
                     break;
                 case 3:
                     break;
@@ -86,7 +87,7 @@ public class ProductController {
         } while (choose != 3);
     }
 
-    private List<ProductRequest> initRequestBody() {
+    private List<ProductRequest> formInputCreateProduct() {
         System.out.println("Nhap so san pham can them");
         List<ProductRequest> productRequests = new ArrayList<>();
         int addProductSize = ScannerCommon.integerInput();
@@ -95,5 +96,16 @@ public class ProductController {
             productRequests.add(requestBody.initRequestBody());
         }
         return productRequests;
+    }
+
+    private ProductRequest formInputUpdateProduct() {
+        System.out.println("Nhap productId muon cap nhat thong tin");
+        String productId = ScannerCommon.stringInput();
+        System.out.println("Nhap productName muon cap nhat thong tin");
+        String productName = ScannerCommon.stringInput();
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.setProductID(productId);
+        productRequest.setProductName(productName);
+        return productRequest;
     }
 }

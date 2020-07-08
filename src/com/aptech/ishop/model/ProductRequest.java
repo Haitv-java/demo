@@ -70,12 +70,12 @@ public class ProductRequest {
 
     public ProductRequest initRequestBody() {
         ProductRequest productRequest = new ProductRequest();
-//        productRequest.setProductID(formInputText(PRODUCT_ID, productRequest));
+        productRequest.setProductID(formInputText(PRODUCT_ID, productRequest));
 //        productRequest.setProductName(formInputText(PRODUCT_NAME, productRequest));
 //        productRequest.setTitle(formInputText(PRODUCT_TITLE, productRequest));
 //        productRequest.setDescriptions(formInputText(PRODUCT_DESCRIPTION, productRequest));
 //        productRequest.setImportPrice(formInputNumber(PRODUCT_PRICE_IMPORT, productRequest));
-        productRequest.setExportPrice(formInputNumber(PRODUCT_PRICE_EXPORT, productRequest));
+//        productRequest.setExportPrice(formInputNumber(PRODUCT_PRICE_EXPORT, productRequest));
         formInputBoolean(PRODUCT_STATUS, productRequest);
 
         return productRequest;
